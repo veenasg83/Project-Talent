@@ -1,4 +1,4 @@
-# Boilerplate.Web.App
+# Project-Talent
 This is React Boilerplate Project
 Steps: 
 1. clone this in visual studio 2017
