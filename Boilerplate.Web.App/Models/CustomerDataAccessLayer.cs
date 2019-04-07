@@ -24,13 +24,13 @@ namespace Boilerplate.Web.App.Models
         }
 
         //add a customer 
-        public int AddCustomer(Customer customer)
+        public int AddCustomer( Customer customer)
         {
             try
             {
                 db.Customer.Add(customer);
-                db.SaveChanges();
-                return 1;
+                return db.SaveChanges();
+              
             }
             catch
             {
@@ -44,8 +44,8 @@ namespace Boilerplate.Web.App.Models
             try
             {
                 db.Entry(customer).State = EntityState.Modified;
-                db.SaveChanges();
-                return 1;
+                return  db.SaveChanges();
+                
             }
             catch
             {
@@ -59,7 +59,8 @@ namespace Boilerplate.Web.App.Models
             {
                 Customer customer = db.Customer.Find(id);
                 db.Customer.Remove(customer);
-                return 1;
+                return db.SaveChanges();
+
             }
             catch
             {

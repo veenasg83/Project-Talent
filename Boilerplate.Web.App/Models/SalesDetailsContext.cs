@@ -33,29 +33,18 @@ namespace Boilerplate.Web.App.Models
         {
             modelBuilder.Entity<Customer>(entity =>
             {
-                entity.Property(e => e.Address)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Address).IsUnicode(false);
 
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Name).IsUnicode(false);
             });
 
             modelBuilder.Entity<Product>(entity =>
             {
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Name).IsUnicode(false);
             });
 
             modelBuilder.Entity<Sales>(entity =>
             {
-                entity.Property(e => e.DateSold).HasColumnType("date");
-
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Sales)
                     .HasForeignKey(d => d.CustomerId)
@@ -77,15 +66,9 @@ namespace Boilerplate.Web.App.Models
 
             modelBuilder.Entity<Store>(entity =>
             {
-                entity.Property(e => e.Address)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Address).IsUnicode(false);
 
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Name).IsUnicode(false);
             });
         }
     }

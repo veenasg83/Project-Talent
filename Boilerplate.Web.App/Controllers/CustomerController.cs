@@ -11,40 +11,70 @@ namespace Boilerplate.Web.App.Controllers
     {
         private CustomerDataAccessLayer objCustomer = new CustomerDataAccessLayer();
 
+
+        public ActionResult Index()
+        {
+            return View();
+        }
+
         //A page to display all data in the Customer table.
         public ActionResult GetAllCustomerDetails()
         {
             var customer = objCustomer.GetAllCustomer();
-            return View(customer);
+            return Json(customer);
         }
 
         //Add new customer data
-        [HttpGet]
-        public ActionResult CreateCustomer()
-        {
-            return View();
-        }
+      
 
         [HttpPost]
-        public ActionResult CreateCustomer(Customer customer)
+        public ActionResult CreateCustomer([FromBody]Customer customer)
         {
-            objCustomer.AddCustomer(customer);
-            return View();
+            var statusMessage = new StatusMessage();
+
+            try
+            {
+                int result = objCustomer.AddCustomer(customer);
+                statusMessage.status = (result > 0) ? "Sucess" : "Failed";
+                statusMessage.message = (result > 0) ? "Customer Added Sucessfuly": "Failed to add customer";
+            }
+            catch(Exception e)
+            {
+                statusMessage.status = "Failed";
+                statusMessage.message = e.Message;
+            }
+
+            return Json(statusMessage);
+                    
         }
 
         //update a customer details
         [HttpPut]
-        public ActionResult EditCustomer(Customer customer)
+        public ActionResult EditCustomer([FromBody]Customer customer)
         {
-            objCustomer.UpdateCustomer(customer);
-            return View();
+            var statusMessage = new StatusMessage();
+            try
+            {
+                int result = objCustomer.UpdateCustomer(customer);
+                statusMessage.status = (result > 0) ? "Sucess" : "Failed";
+                statusMessage.message = "Customer edited Sucessfuly";
+            }
+            catch (Exception e)
+            {
+                statusMessage.status = "Failed";
+                statusMessage.message = e.Message;
+            }
+
+            return Json(statusMessage);
+
+           
         }
 
         //delete a customer details
         [HttpDelete]
         public ActionResult Delete(int id)
         {
-            objCustomer.DeleteCustomer(id);
+           int result = objCustomer.DeleteCustomer(id);
             return View();
         }
 

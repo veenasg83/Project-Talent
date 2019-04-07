@@ -20,19 +20,33 @@ module.exports = {
     },
     module: {
         rules: [
-        {
-            test: /\.(s?)css$/,
-            loader: 'style-loader!css-loader!sass-loader'
-        },
-        {
-            test: /\.(js|jsx)$/,
-            exclude: /node_modules/,
-            use: { loader: "babel-loader" }
-        },
-        {
-            test: /\.html$/,
-            use: { loader: "html-loader" }
-        }
+            {
+                test: /\.(s?)css$/,
+                loader: 'style-loader!css-loader!sass-loader'
+            },
+            {
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                use: { loader: "babel-loader" }
+            },
+            {
+                test: /\.html$/,
+                use: { loader: "html-loader" }
+            },
+
+            {
+                test: /\.(ttf|eot|svg|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                use: [{
+                    loader: 'file-loader'
+                }]
+            },
+            {
+                test: /\.(png|jpg|gif)$/,
+                use: [{
+                    loader: 'file-loader'
+                }]
+            }
+
 
         ]
     },
