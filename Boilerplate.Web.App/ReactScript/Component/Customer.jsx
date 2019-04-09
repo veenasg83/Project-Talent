@@ -2,6 +2,7 @@
 import { Icon, Table, Button, Header, Image, Modal } from 'semantic-ui-react'
 import NewCustomerModal from './NewCustomerModal';
 import EditCustomerModal from './EditCustomerModal';
+import DeleteCustomerModal from './DeleteCustomerModal';
 
 
 class Customer extends Component {
@@ -60,8 +61,8 @@ class Customer extends Component {
                                       
                                     </Table.Cell>
                                     <Table.Cell>
-                                        <Button color='red' >
-                                            <i className="trash icon"></i>DELETE</Button>
+                                        <DeleteCustomerModal customerId={item.id}/>
+                                      
                                     </Table.Cell> 
                                 </Table.Row>
 

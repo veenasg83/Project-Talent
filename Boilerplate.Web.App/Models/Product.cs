@@ -18,6 +18,7 @@ namespace Boilerplate.Web.App.Models
         public string Name { get; set; }
         public int? Price { get; set; }
 
+        [Newtonsoft.Json.JsonIgnore]
         [InverseProperty("Product")]
         public ICollection<Sales> Sales { get; set; }
     }

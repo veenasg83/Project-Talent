@@ -14,7 +14,12 @@ namespace Boilerplate.Web.App.Models
         {
             try
             {
-                return db.Sales.ToList();
+                return db.Sales.Where(x => x.CustomerId == x.Customer.Id)
+                    .Where(y => y.ProductId == y.Product.Id)
+                    .Where(z => z.StoreId == z.Store.Id)
+                    .Include(c => c.Customer)
+                    .Include(p => p.Product)
+                    .Include(s => s.Store);
             }
             catch
             {

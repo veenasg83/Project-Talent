@@ -28,8 +28,8 @@ namespace Boilerplate.Web.App.Models
             try
             {
                 db.Store.Add(store);
-                db.SaveChanges();
-                return 1;
+                return db.SaveChanges();
+               
             }
             catch
             {
@@ -43,8 +43,8 @@ namespace Boilerplate.Web.App.Models
             try
             {
                 db.Entry(store).State = EntityState.Modified;
-                db.SaveChanges();
-                return 1;
+                return db.SaveChanges();
+                
             }
             catch
             {
@@ -58,7 +58,7 @@ namespace Boilerplate.Web.App.Models
             {
                 Store store = db.Store.Find(id);
                 db.Store.Remove(store);
-                return 1;
+                return db.SaveChanges();
             }
             catch
             {

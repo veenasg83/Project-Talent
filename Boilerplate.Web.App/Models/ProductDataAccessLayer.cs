@@ -29,8 +29,8 @@ namespace Boilerplate.Web.App.Models
             try
             {
                 db.Product.Add(product);
-                db.SaveChanges();
-                return 1;
+               return db.SaveChanges();
+               
             }
             catch
             {
@@ -59,7 +59,7 @@ namespace Boilerplate.Web.App.Models
             {
                 Product pdt = db.Product.Find(id);
                 db.Product.Remove(pdt);
-                return 1;
+                return db.SaveChanges();
             }
             catch
             {

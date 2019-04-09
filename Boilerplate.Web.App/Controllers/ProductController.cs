@@ -14,37 +14,73 @@ namespace Boilerplate.Web.App.Controllers
         public ActionResult GetAllProductDetails()
         {
             var product = objProduct.GetAllProduct();
-            return View(product);
+            return Json(product);
         }
 
         //Add new product data
-        [HttpGet]
-        public ActionResult CreateProduct()
-        {
-            return View();
-        }
-
         [HttpPost]
-        public ActionResult CreateProduct(Product product)
+        public ActionResult CreateProduct([FromBody]Product product)
         {
-            objProduct.AddProduct(product);
-            return View();
+            var statusMessage = new StatusMessage();
+
+            try
+            {
+                int result = objProduct.AddProduct(product); 
+                statusMessage.status = (result > 0) ? "Sucess" : "Failed";
+                statusMessage.message = (result > 0) ? "Product Added Sucessfuly" : "Failed to add product";
+            }
+            catch (Exception e)
+            {
+                statusMessage.status = "Failed";
+                statusMessage.message = e.Message;
+            }
+
+            return Json(statusMessage);
+           
         }
 
         //update a product details
         [HttpPut]
-        public ActionResult EditProduct(Product product)
+        public ActionResult EditProduct([FromBody]Product product)
         {
-            objProduct.UpdateProduct(product);
-            return View();
+            var statusMessage = new StatusMessage();
+            try
+            {
+                int result = objProduct.UpdateProduct(product);
+                statusMessage.status = (result > 0) ? "Sucess" : "Failed";
+                statusMessage.message = "Product edited Sucessfuly";
+            }
+            catch (Exception e)
+            {
+                statusMessage.status = "Failed";
+                statusMessage.message = e.Message;
+            }
+
+            return Json(statusMessage);
+         
+            
         }
 
         //Delete a product
         [HttpDelete]
         public ActionResult Delete(int id)
         {
-            objProduct.DeleteProduct(id);
-            return View();
+            var statusMessage = new StatusMessage();
+            try
+            {
+                int result = objProduct.DeleteProduct(id);
+                statusMessage.status = (result > 0) ? "Sucess" : "Failed";
+                statusMessage.message = "Product Deleted Sucessfully";
+            }
+            catch (Exception e)
+            {
+                statusMessage.status = "Failed";
+                statusMessage.message = e.Message;
+            }
+
+            return Json(statusMessage);
+            
+            
         }
     }
 }

@@ -36,7 +36,7 @@ namespace Boilerplate.Web.App.Controllers
             {
                 int result = objCustomer.AddCustomer(customer);
                 statusMessage.status = (result > 0) ? "Sucess" : "Failed";
-                statusMessage.message = (result > 0) ? "Customer Added Sucessfuly": "Failed to add customer";
+                statusMessage.message = (result > 0) ? "Customer Added Sucessfully": "Failed to add customer";
             }
             catch(Exception e)
             {
@@ -57,7 +57,7 @@ namespace Boilerplate.Web.App.Controllers
             {
                 int result = objCustomer.UpdateCustomer(customer);
                 statusMessage.status = (result > 0) ? "Sucess" : "Failed";
-                statusMessage.message = "Customer edited Sucessfuly";
+                statusMessage.message = "Customer edited Sucessfully";
             }
             catch (Exception e)
             {
@@ -74,8 +74,20 @@ namespace Boilerplate.Web.App.Controllers
         [HttpDelete]
         public ActionResult Delete(int id)
         {
-           int result = objCustomer.DeleteCustomer(id);
-            return View();
+            var statusMessage = new StatusMessage();
+            try
+            {
+                int result = objCustomer.DeleteCustomer(id);
+                statusMessage.status = (result > 0) ? "Sucess" : "Failed";
+                statusMessage.message = "Customer Deleted Sucessfully";
+            }
+            catch (Exception e)
+            {
+                statusMessage.status = "Failed";
+                statusMessage.message = e.Message;
+            }
+
+            return Json(statusMessage);
         }
 
     }

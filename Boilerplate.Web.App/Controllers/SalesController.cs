@@ -15,7 +15,7 @@ namespace Boilerplate.Web.App.Controllers
         public ActionResult GetAllSalesDetails()
         {
             var sales = objSales.GetAllSales();
-            return View(sales);
+            return Json(sales);
         }
 
         //Add new sale data

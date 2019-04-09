@@ -15,37 +15,75 @@ namespace Boilerplate.Web.App.Controllers
         public ActionResult GetAllStoreDetails()
         {
             var store = objStore.GetAllStore();
-            return View(store);
+            return Json(store);
         }
 
         //Add new store data
-        [HttpGet]
-        public ActionResult CreateStore()
-        {
-            return View();
-        }
-
         [HttpPost]
-        public ActionResult CreateStore(Store store)
+        public ActionResult CreateStore([FromBody]Store store)
         {
-            objStore.AddStore(store);
-            return View();
+            var statusMessage = new StatusMessage();
+
+            try
+            {
+                int result = objStore.AddStore(store);
+                statusMessage.status = (result > 0) ? "Sucess" : "Failed";
+                statusMessage.message = (result > 0) ? "Store Added Sucessfuly" : "Failed to add Store";
+            }
+            catch (Exception e)
+            {
+                statusMessage.status = "Failed";
+                statusMessage.message = e.Message;
+            }
+
+            return Json(statusMessage);
+           
+          
         }
 
         //update a store details
         [HttpPut]
-        public ActionResult EditStore(Store store)
+        public ActionResult EditStore([FromBody]Store store)
         {
-            objStore.UpdateStore(store);
-            return View();
+
+            var statusMessage = new StatusMessage();
+            try
+            {
+                int result = objStore.UpdateStore(store);
+                statusMessage.status = (result > 0) ? "Sucess" : "Failed";
+                statusMessage.message = "Customer edited Sucessfuly";
+            }
+            catch (Exception e)
+            {
+                statusMessage.status = "Failed";
+                statusMessage.message = e.Message;
+            }
+
+            return Json(statusMessage);
+          
+     
         }
 
         //delete a store details
         [HttpDelete]
         public ActionResult Delete(int id)
         {
-            objStore.DeleteStore(id);
-            return View();
+            var statusMessage = new StatusMessage();
+            try
+            {
+                int result = objStore.DeleteStore(id);
+                statusMessage.status = (result > 0) ? "Sucess" : "Failed";
+                statusMessage.message = "Store Deleted Sucessfully";
+            }
+            catch (Exception e)
+            {
+                statusMessage.status = "Failed";
+                statusMessage.message = e.Message;
+            }
+
+            return Json(statusMessage);
+            
+            
         }
     }
 }

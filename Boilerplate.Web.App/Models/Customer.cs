@@ -20,6 +20,7 @@ namespace Boilerplate.Web.App.Models
         [StringLength(50)]
         public string Address { get; set; }
 
+        [Newtonsoft.Json.JsonIgnore]
         [InverseProperty("Customer")]
         public ICollection<Sales> Sales { get; set; }
     }

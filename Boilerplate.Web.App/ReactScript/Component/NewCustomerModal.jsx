@@ -61,7 +61,7 @@ class NewCustomerModal extends React.Component {
 
 
     render() {
-        const {open, name, address} = this.state
+        const { open, dimmer, name, address} = this.state
         return (
                  <React.Fragment>
                 <Button primary onClick={this.show('blurring')}>New Customer</Button>
