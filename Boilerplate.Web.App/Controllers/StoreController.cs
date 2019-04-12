@@ -9,12 +9,12 @@ namespace Boilerplate.Web.App.Controllers
 {
     public class StoreController : Controller
     {
-        private StoreDataAccessLayer objStore = new StoreDataAccessLayer();
+        private StoreDataAccessLayer storeDataAccessLayer = new StoreDataAccessLayer();
 
         //A page to display all data in the Store table.
         public ActionResult GetAllStoreDetails()
         {
-            var store = objStore.GetAllStore();
+            var store = storeDataAccessLayer.GetAllStore();
             return Json(store);
         }
 
@@ -26,7 +26,7 @@ namespace Boilerplate.Web.App.Controllers
 
             try
             {
-                int result = objStore.AddStore(store);
+                int result = storeDataAccessLayer.AddStore(store);
                 statusMessage.status = (result > 0) ? "Sucess" : "Failed";
                 statusMessage.message = (result > 0) ? "Store Added Sucessfuly" : "Failed to add Store";
             }
@@ -49,7 +49,7 @@ namespace Boilerplate.Web.App.Controllers
             var statusMessage = new StatusMessage();
             try
             {
-                int result = objStore.UpdateStore(store);
+                int result = storeDataAccessLayer.UpdateStore(store);
                 statusMessage.status = (result > 0) ? "Sucess" : "Failed";
                 statusMessage.message = "Customer edited Sucessfuly";
             }
@@ -71,7 +71,7 @@ namespace Boilerplate.Web.App.Controllers
             var statusMessage = new StatusMessage();
             try
             {
-                int result = objStore.DeleteStore(id);
+                int result = storeDataAccessLayer.DeleteStore(id);
                 statusMessage.status = (result > 0) ? "Sucess" : "Failed";
                 statusMessage.message = "Store Deleted Sucessfully";
             }

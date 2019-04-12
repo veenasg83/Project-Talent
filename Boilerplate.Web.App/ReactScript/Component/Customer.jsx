@@ -6,12 +6,9 @@ import DeleteCustomerModal from './DeleteCustomerModal';
 
 
 class Customer extends Component {
-    constructor() {
-        super();
-        this.state = {
-            data: []
-        }
-    }
+
+    state = { data: [] };
+
     componentDidMount() {
         $.ajax({
             url: "http://localhost:61419/customer/GetAllCustomerDetails",
@@ -19,7 +16,6 @@ class Customer extends Component {
             dataType: 'json',
             ContentType: 'application/json',
             success: function (data) {
-
                 this.setState({ data: data });
             }.bind(this),
             error: function (jqXHR) {

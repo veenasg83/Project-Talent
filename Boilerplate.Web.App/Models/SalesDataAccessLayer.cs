@@ -48,13 +48,14 @@ namespace Boilerplate.Web.App.Models
             try
             {
                 db.Entry(sales).State = EntityState.Modified;
-                db.SaveChanges();
-                return 1;
+                return db.SaveChanges();
+
             }
             catch
             {
                 throw;
             }
+            
         }
         //delete a sales
         public int DeleteSales(int id)

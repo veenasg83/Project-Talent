@@ -5,6 +5,7 @@ import { Menu, Segment } from 'semantic-ui-react'
 import Customer from './Customer.jsx';
 import Product from './Product.jsx';
 import Store from './Store.jsx';
+import Sales from './Sales.jsx';
 
 
 class App extends Component {
@@ -19,17 +20,20 @@ class App extends Component {
     render() {
         const { activeItem } = this.state
         let mainPage;
-        if (activeItem == 'customers')
-        {
-            mainPage = <Customer/>;
+        if (activeItem == 'customers') {
+            mainPage = <Customer />;
         }
-        else if(activeItem == 'products')
-        {
-            mainPage = <Product/>;
+        else if (activeItem == 'products') {
+            mainPage = <Product />;
         }
-        else if(activeItem == 'stores')
-        {
-            mainPage = <Store/>;
+        else if (activeItem == 'stores') {
+            mainPage = <Store />;
+        }
+        else if (activeItem == 'sales') {
+            mainPage = <Sales />
+        }
+        else {
+            mainPage = <Customer/>
         }
  
 

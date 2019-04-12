@@ -9,11 +9,11 @@ namespace Boilerplate.Web.App.Controllers
 {
     public class ProductController : Controller
     {
-        private ProductDataAccessLayer objProduct = new ProductDataAccessLayer();
+        private ProductDataAccessLayer productDataAccessLayer = new ProductDataAccessLayer();
         //A page to display all product in the product table.
         public ActionResult GetAllProductDetails()
         {
-            var product = objProduct.GetAllProduct();
+            var product = productDataAccessLayer.GetAllProduct();
             return Json(product);
         }
 
@@ -25,7 +25,7 @@ namespace Boilerplate.Web.App.Controllers
 
             try
             {
-                int result = objProduct.AddProduct(product); 
+                int result = productDataAccessLayer.AddProduct(product); 
                 statusMessage.status = (result > 0) ? "Sucess" : "Failed";
                 statusMessage.message = (result > 0) ? "Product Added Sucessfuly" : "Failed to add product";
             }
@@ -46,7 +46,7 @@ namespace Boilerplate.Web.App.Controllers
             var statusMessage = new StatusMessage();
             try
             {
-                int result = objProduct.UpdateProduct(product);
+                int result = productDataAccessLayer.UpdateProduct(product);
                 statusMessage.status = (result > 0) ? "Sucess" : "Failed";
                 statusMessage.message = "Product edited Sucessfuly";
             }
@@ -68,7 +68,7 @@ namespace Boilerplate.Web.App.Controllers
             var statusMessage = new StatusMessage();
             try
             {
-                int result = objProduct.DeleteProduct(id);
+                int result = productDataAccessLayer.DeleteProduct(id);
                 statusMessage.status = (result > 0) ? "Sucess" : "Failed";
                 statusMessage.message = "Product Deleted Sucessfully";
             }

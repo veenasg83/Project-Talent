@@ -9,7 +9,7 @@ namespace Boilerplate.Web.App.Controllers
 {
     public class CustomerController : Controller
     {
-        private CustomerDataAccessLayer objCustomer = new CustomerDataAccessLayer();
+        private CustomerDataAccessLayer customerDataAccessLayer = new CustomerDataAccessLayer();
 
 
         public ActionResult Index()
@@ -20,7 +20,7 @@ namespace Boilerplate.Web.App.Controllers
         //A page to display all data in the Customer table.
         public ActionResult GetAllCustomerDetails()
         {
-            var customer = objCustomer.GetAllCustomer();
+            var customer = customerDataAccessLayer.GetAllCustomer();
             return Json(customer);
         }
 
@@ -34,7 +34,7 @@ namespace Boilerplate.Web.App.Controllers
 
             try
             {
-                int result = objCustomer.AddCustomer(customer);
+                int result = customerDataAccessLayer.AddCustomer(customer);
                 statusMessage.status = (result > 0) ? "Sucess" : "Failed";
                 statusMessage.message = (result > 0) ? "Customer Added Sucessfully": "Failed to add customer";
             }
@@ -55,7 +55,7 @@ namespace Boilerplate.Web.App.Controllers
             var statusMessage = new StatusMessage();
             try
             {
-                int result = objCustomer.UpdateCustomer(customer);
+                int result = customerDataAccessLayer.UpdateCustomer(customer);
                 statusMessage.status = (result > 0) ? "Sucess" : "Failed";
                 statusMessage.message = "Customer edited Sucessfully";
             }
@@ -77,7 +77,7 @@ namespace Boilerplate.Web.App.Controllers
             var statusMessage = new StatusMessage();
             try
             {
-                int result = objCustomer.DeleteCustomer(id);
+                int result = customerDataAccessLayer.DeleteCustomer(id);
                 statusMessage.status = (result > 0) ? "Sucess" : "Failed";
                 statusMessage.message = "Customer Deleted Sucessfully";
             }

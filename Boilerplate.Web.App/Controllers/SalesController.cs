@@ -9,42 +9,66 @@ namespace Boilerplate.Web.App.Controllers
 {
     public class SalesController : Controller
     {
-        private SalesDataAccessLayer objSales = new SalesDataAccessLayer();
+        private SalesDataAccessLayer salesDataAccessLayer = new SalesDataAccessLayer();
 
         //A page to display all data in the sales table.
         public ActionResult GetAllSalesDetails()
         {
-            var sales = objSales.GetAllSales();
+            var sales = salesDataAccessLayer.GetAllSales();
             return Json(sales);
         }
 
         //Add new sale data
-        [HttpGet]
-        public ActionResult CreateSales()
-        {
-            return View();
-        }
-
+        
         [HttpPost]
-        public ActionResult CreateSales(Sales sales)
+        public ActionResult CreateSales([FromBody]Sales sales)
         {
-            objSales.AddSales(sales);
-            return View();
+            var statusMessage = new StatusMessage();
+
+            try
+            {
+                int result = salesDataAccessLayer.AddSales(sales); ;
+                statusMessage.status = (result > 0) ? "Sucess" : "Failed";
+                statusMessage.message = (result > 0) ? "Sales Added Sucessfully" : "Failed to add sale";
+            }
+            catch (Exception e)
+            {
+                statusMessage.status = "Failed";
+                statusMessage.message = e.Message;
+            }
+
+            return Json(statusMessage);
+            
+            
         }
 
         //update a sales details
         [HttpPut]
-        public ActionResult EditSales(Sales sales)
+        public ActionResult EditSales([FromBody]Sales sales)
         {
-            objSales.UpdateSales(sales);
-            return View();
+
+            var statusMessage = new StatusMessage();
+            try
+            {
+                int result = salesDataAccessLayer.UpdateSales(sales);
+                statusMessage.status = (result > 0) ? "Sucess" : "Failed";
+                statusMessage.message = "Sales edited Sucessfully";
+            }
+            catch (Exception e)
+            {
+                statusMessage.status = "Failed";
+                statusMessage.message = e.Message;
+            }
+
+            return Json(statusMessage);
+         
         }
 
         //delete a sales details
         [HttpDelete]
         public ActionResult Delete(int id)
         {
-            objSales.DeleteSales(id);
+            salesDataAccessLayer.DeleteSales(id);
             return View();
         }
     }
