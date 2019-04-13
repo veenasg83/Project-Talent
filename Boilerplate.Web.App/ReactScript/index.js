@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom';
 import App from './Component/App.jsx';
 import 'semantic-ui-css/semantic.min.css';
 
+import './style/myStyle.css';
+
 
 ReactDOM.render(<App />, document.getElementById("root"));
 

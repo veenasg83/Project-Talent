@@ -1,13 +1,20 @@
 ﻿import React, { Component } from 'react';
-import { Icon, Table, Button, Header, Image, Modal } from 'semantic-ui-react'
+import '../style/myStyle.css';
+import { Icon, Table, Button, Header, Image, Modal, Pagination } from 'semantic-ui-react'
 import NewCustomerModal from './NewCustomerModal';
 import EditCustomerModal from './EditCustomerModal';
 import DeleteCustomerModal from './DeleteCustomerModal';
+import _ from 'lodash';
+
 
 
 class Customer extends Component {
 
-    state = { data: [] };
+    state = {
+        column: null,        
+        direction: null,
+        data: []
+    };
 
     componentDidMount() {
         $.ajax({
@@ -23,38 +30,62 @@ class Customer extends Component {
             }.bind(this)
         })
     }
+
+    handleSort = clickedColumn => () => {
+        const { column, data, direction } = this.state
+
+        if (column !== clickedColumn) {
+            this.setState({
+                column: clickedColumn,
+                data: _.sortBy(data, [clickedColumn]),
+                direction: 'ascending',
+            })
+
+            return
+        }
+        this.setState({
+            data: data.reverse(),
+            direction: direction === 'ascending' ? 'descending' : 'ascending',
+        })
+    }
+
     render() {
 
-
+        const { column, data, direction } = this.state
         return (
-            <div id="parent">
-             
-               
-            <div>
-                    <NewCustomerModal name="New Customer" />
+            <React.Fragment>
+
+                <div className = "newButton">
+                 <NewCustomerModal name="New Customer" />
             </div>
 
 
-                <div id='container'>
-                    <Table striped celled>
+                <div  className="dataTable">
+                    <Table sortable striped celled fixed>
                     <Table.Header>
                         <Table.Row>
-                            <Table.HeaderCell>Name</Table.HeaderCell>
-                            <Table.HeaderCell>Address</Table.HeaderCell>
-                            <Table.HeaderCell>Action</Table.HeaderCell>
-                                <Table.HeaderCell>Action</Table.HeaderCell>
+                           <Table.HeaderCell
+                              sorted={column === 'name' ? direction : null}
+                                    onClick={this.handleSort('name')}                                  
+                           >
+                           Name</Table.HeaderCell>
+                                <Table.HeaderCell
+                                    sorted={column === 'address' ? direction : null}
+                                    onClick={this.handleSort('address')}
+                                >Address</Table.HeaderCell>
+                           <Table.HeaderCell>Action</Table.HeaderCell>
+                           <Table.HeaderCell>Action</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
 
-                        <Table.Body>
+                        <Table.Body >
                             {this.state.data.map((item) =>
 
                                 <Table.Row key={item.id}>
                                     <Table.Cell>{item.name}</Table.Cell>
                                     <Table.Cell>{item.address}</Table.Cell>
                                     <Table.Cell>
-                                        <EditCustomerModal customer={item}/>
-                                      
+                                        <EditCustomerModal customer={item}/>                                      
                                     </Table.Cell>
                                     <Table.Cell>
                                         <DeleteCustomerModal customerId={item.id}/>
@@ -67,7 +98,9 @@ class Customer extends Component {
                     </Table.Body>
                 </Table>
                 </div>
-                </div>           
+                   
+              
+                </React.Fragment>           
  
                     
                )

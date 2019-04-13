@@ -40,7 +40,7 @@ class App extends Component {
         return (
             <div>
                 <Segment inverted>
-                    <Menu inverted pointing secondary>
+                    <Menu inverted  secondary>
                         <Menu.Item name='React' />
                         <Menu.Item
                             name='customers'

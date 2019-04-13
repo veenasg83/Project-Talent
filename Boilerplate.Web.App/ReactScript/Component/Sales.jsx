@@ -46,10 +46,11 @@ class Sales extends Component {
 
         return (
             <div id="parent">
-                <div> <NewSaleModal name="New Sale"/></div>
+                <div className="newButton">
+                    <NewSaleModal name="New Sale" /></div>
 
 
-                <div id='container'>
+                <div className="dataTable">
                     <Table striped celled>
                         <Table.Header>
                             <Table.Row>

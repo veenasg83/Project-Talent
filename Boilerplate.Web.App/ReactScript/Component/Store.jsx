@@ -31,11 +31,11 @@ class Store extends Component {
 
         return (
             <div id="parent">
-            <div>
+                <div className="newButton">
                <NewStoreModal name="New Store" />
                 </div>
-                <div id='container'>
-                    <Table striped celled>
+                <div className="dataTable">
+                    <Table  striped celled>
                         <Table.Header>
                             <Table.Row>
                                 <Table.HeaderCell>Name</Table.HeaderCell>
