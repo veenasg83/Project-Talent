@@ -2,6 +2,7 @@
 import { Icon, Table, Button, Header, Image, Modal } from 'semantic-ui-react'
 import NewSaleModal from './NewSaleModal';
 import EditSaleModal from './EditSaleModal.jsx';
+import DeleteSaleModal from './DeleteSaleModal.jsx';
 
 
 class Sales extends Component {
@@ -75,10 +76,7 @@ class Sales extends Component {
 
                                     </Table.Cell>
                                     <Table.Cell>
-                                        <Button color='red' >
-                                            <i className="trash icon"></i>DELETE</Button>
-
-
+                                        <DeleteSaleModal saleId={item.id}/>                                  
                                     </Table.Cell>
                                 </Table.Row>
 

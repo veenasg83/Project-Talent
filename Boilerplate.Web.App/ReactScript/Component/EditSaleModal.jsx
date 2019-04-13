@@ -4,17 +4,17 @@ import { Button, Header, Image, Modal, Form } from 'semantic-ui-react'
 class EditSaleModal extends Component {
     state = {
         open: false,
-        date: '',   
+        date: this.props.sale.dateSold,
+        saleid: this.props.sale.id,
         customerName: this.props.sale.customer.name,
         productName: this.props.sale.product.name,
         storeName: this.props.sale.store.name,
         customerOptions: [],
         productOptions: [],
         storeOptions: [],
-        selectedCustomerId: 0,
-        selectedProductId: 0,
-        selectedStoreId: 0
-
+        selectedCustomerId: this.props.sale.customer.id,
+        selectedProductId: this.props.sale.product.id,
+        selectedStoreId: this.props.sale.store.id
     }
 
     show = dimmer => () => {
@@ -120,10 +120,7 @@ class EditSaleModal extends Component {
         let select = [];
 
         value = data.value;
-
         select = data.options.find(o => o.value === value);
-
-
         console.log("onchangecustomre key", select.key);
 
         this.setState({
@@ -159,10 +156,11 @@ class EditSaleModal extends Component {
 
     editSale = () => {
         let data = {
-            'ProductId': this.state.selectedProductId,
-            'CustomerId': this.state.selectedCustomerId,
-            'StoreId': this.state.selectedStoreId,
-            'DateSold': this.state.date
+            'id': this.state.saleid,
+            'productid': this.state.selectedProductId,
+            'customerid': this.state.selectedCustomerId,
+            'storeid': this.state.selectedStoreId,
+            'datesold': this.state.datesold
         };
 
         $.ajax({
@@ -191,7 +189,7 @@ class EditSaleModal extends Component {
                         <Form>
                             <Form.Field>
                                 <label>Date Sold</label>
-                                <input placeholder='date' name='date' value={date} onChange={(event) => { this.onChange(event, 'date') }} />
+                                <input name='date' value={date} onChange={(event) => { this.onChange(event, 'date') }} />
                             </Form.Field>
                             <Form.Select fluid label='Customer' name='customerName' value={customerName} options={customerOptions} onChange={this.onChangeCustomer} />
                             <Form.Select fluid label='Product' name='productName' value={productName} options={productOptions} onChange={this.onChangeProduct} />

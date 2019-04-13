@@ -57,6 +57,8 @@ namespace Boilerplate.Web.App.Models
             }
             
         }
+
+
         //delete a sales
         public int DeleteSales(int id)
         {
@@ -64,7 +66,7 @@ namespace Boilerplate.Web.App.Models
             {
                 Sales sales = db.Sales.Find(id);
                 db.Sales.Remove(sales);
-                return 1;
+                return db.SaveChanges();
             }
             catch
             {

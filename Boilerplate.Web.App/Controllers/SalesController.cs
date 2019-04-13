@@ -68,8 +68,20 @@ namespace Boilerplate.Web.App.Controllers
         [HttpDelete]
         public ActionResult Delete(int id)
         {
-            salesDataAccessLayer.DeleteSales(id);
-            return View();
+            var statusMessage = new StatusMessage();
+            try
+            {
+                int result = salesDataAccessLayer.DeleteSales(id);
+                statusMessage.status = (result > 0) ? "Success" : "Failed";
+                statusMessage.message = "The Sale details deleted successfully";
+            }
+            catch(Exception e)
+            {
+                statusMessage.status = "Failed";
+                statusMessage.message = e.Message;
+            }
+            return Json(statusMessage);
+          
         }
     }
 }
