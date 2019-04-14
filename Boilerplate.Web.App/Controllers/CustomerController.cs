@@ -9,7 +9,12 @@ namespace Boilerplate.Web.App.Controllers
 {
     public class CustomerController : Controller
     {
-        private CustomerDataAccessLayer customerDataAccessLayer = new CustomerDataAccessLayer();
+        private SalesDetailsContext dbContext;
+
+        public CustomerController(SalesDetailsContext db)
+        {
+            dbContext = db;
+        }         
 
 
         public ActionResult Index()
@@ -20,6 +25,7 @@ namespace Boilerplate.Web.App.Controllers
         //A page to display all data in the Customer table.
         public ActionResult GetAllCustomerDetails()
         {
+            CustomerDataAccessLayer customerDataAccessLayer = new CustomerDataAccessLayer(dbContext);
             var customer = customerDataAccessLayer.GetAllCustomer();
             return Json(customer);
         }
@@ -34,6 +40,7 @@ namespace Boilerplate.Web.App.Controllers
 
             try
             {
+                CustomerDataAccessLayer customerDataAccessLayer = new CustomerDataAccessLayer(dbContext);
                 int result = customerDataAccessLayer.AddCustomer(customer);
                 statusMessage.status = (result > 0) ? "Sucess" : "Failed";
                 statusMessage.message = (result > 0) ? "Customer Added Sucessfully": "Failed to add customer";
@@ -55,6 +62,7 @@ namespace Boilerplate.Web.App.Controllers
             var statusMessage = new StatusMessage();
             try
             {
+                CustomerDataAccessLayer customerDataAccessLayer = new CustomerDataAccessLayer(dbContext);
                 int result = customerDataAccessLayer.UpdateCustomer(customer);
                 statusMessage.status = (result > 0) ? "Sucess" : "Failed";
                 statusMessage.message = "Customer edited Sucessfully";
@@ -77,6 +85,7 @@ namespace Boilerplate.Web.App.Controllers
             var statusMessage = new StatusMessage();
             try
             {
+                CustomerDataAccessLayer customerDataAccessLayer = new CustomerDataAccessLayer(dbContext);
                 int result = customerDataAccessLayer.DeleteCustomer(id);
                 statusMessage.status = (result > 0) ? "Sucess" : "Failed";
                 statusMessage.message = "Customer Deleted Sucessfully";

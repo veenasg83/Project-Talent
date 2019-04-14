@@ -8,12 +8,12 @@ import DeleteSaleModal from './DeleteSaleModal.jsx';
 class Sales extends Component {
     
 
-    constructor() {
-        super();
-        this.state = {
-            data: []
-        }
-    }
+    state = {
+        column: null,
+        direction: null,
+        data: []
+    };
+
     componentDidMount() {
         $.ajax({
             url: "http://localhost:61419/sales/GetAllSalesDetails",
@@ -28,7 +28,25 @@ class Sales extends Component {
                 console.log(jqXHR);
             }.bind(this)
         })
-    }   
+    }
+
+    handleSort = clickedColumn => () => {
+        const { column, data, direction } = this.state
+
+        if (column !== clickedColumn) {
+            this.setState({
+                column: clickedColumn,
+                data: _.sortBy(data, [clickedColumn]),
+                direction: 'ascending',
+            })
+
+            return
+        }
+        this.setState({
+            data: data.reverse(),
+            direction: direction === 'ascending' ? 'descending' : 'ascending',
+        })
+    }
 
 
     formatDate = (dateString) => {
@@ -43,7 +61,7 @@ class Sales extends Component {
 
     render() {
 
-
+        const { column, data, direction } = this.state
         return (
             <div id="parent">
                 <div className="newButton">
@@ -51,15 +69,27 @@ class Sales extends Component {
 
 
                 <div className="dataTable">
-                    <Table striped celled>
+                    <Table sortable striped celled fixed>
                         <Table.Header>
                             <Table.Row>
-                                <Table.HeaderCell>Customer</Table.HeaderCell>
-                                <Table.HeaderCell>Product</Table.HeaderCell>
-                                <Table.HeaderCell>Store</Table.HeaderCell>
-                                <Table.HeaderCell>Date Sold</Table.HeaderCell>
-                                <Table.HeaderCell>Action</Table.HeaderCell>
-                                <Table.HeaderCell>Action</Table.HeaderCell>
+                                <Table.HeaderCell
+                                    sorted={column === 'customer' ? direction : null}
+                                    onClick={this.handleSort('customer')}    
+                                >Customer</Table.HeaderCell>
+                                <Table.HeaderCell
+                                    sorted={column === 'product' ? direction : null}
+                                    onClick={this.handleSort('product')}    
+                                >Product</Table.HeaderCell>
+                                <Table.HeaderCell
+                                    sorted={column === 'store' ? direction : null}
+                                    onClick={this.handleSort('store')}    
+                                >Store</Table.HeaderCell>
+                                <Table.HeaderCell
+                                    sorted={column === 'datesold' ? direction : null}
+                                    onClick={this.handleSort('datesold')}    
+                                >Date Sold</Table.HeaderCell>
+                                <Table.HeaderCell>Actions</Table.HeaderCell>
+                                <Table.HeaderCell>Actions</Table.HeaderCell>
                             </Table.Row>
                         </Table.Header>
 

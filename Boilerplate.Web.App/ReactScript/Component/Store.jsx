@@ -5,12 +5,11 @@ import EditStoreModal from './EditStoreModal.jsx'
 import DeleteStoreModal from './DeleteStoreModal.jsx'
 
 class Store extends Component {
-    constructor() {
-        super();
-        this.state = {
-            data: []
-        }
-    }
+    state = {
+        column: null,
+        direction: null,
+        data: []
+    };
     componentDidMount() {
         $.ajax({
             url: "http://localhost:61419/store/GetAllStoreDetails",
@@ -26,20 +25,43 @@ class Store extends Component {
             }.bind(this)
         })
     }
+    handleSort = clickedColumn => () => {
+        const { column, data, direction } = this.state
+
+        if (column !== clickedColumn) {
+            this.setState({
+                column: clickedColumn,
+                data: _.sortBy(data, [clickedColumn]),
+                direction: 'ascending',
+            })
+
+            return
+        }
+        this.setState({
+            data: data.reverse(),
+            direction: direction === 'ascending' ? 'descending' : 'ascending',
+        })
+    }
     render() {
 
-
+        const { column, data, direction } = this.state
         return (
             <div id="parent">
                 <div className="newButton">
                <NewStoreModal name="New Store" />
                 </div>
                 <div className="dataTable">
-                    <Table  striped celled>
+                    <Table  sortable striped celled fixed>
                         <Table.Header>
                             <Table.Row>
-                                <Table.HeaderCell>Name</Table.HeaderCell>
-                                <Table.HeaderCell>Address</Table.HeaderCell>
+                                <Table.HeaderCell
+                                    sorted={column === 'name' ? direction : null}
+                                    onClick={this.handleSort('name')}
+                                >Name</Table.HeaderCell>
+                                <Table.HeaderCell
+                                    sorted={column === 'address' ? direction : null}
+                                    onClick={this.handleSort('address')}    
+                                >Address</Table.HeaderCell>
                                 <Table.HeaderCell>Action</Table.HeaderCell>
                                 <Table.HeaderCell>Action</Table.HeaderCell>
                             </Table.Row>

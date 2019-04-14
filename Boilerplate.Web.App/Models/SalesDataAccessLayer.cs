@@ -8,13 +8,19 @@ namespace Boilerplate.Web.App.Models
 {
     public class SalesDataAccessLayer
     {
-        SalesDetailsContext db = new SalesDetailsContext();
+        private SalesDetailsContext dbContext;
+
+        public SalesDataAccessLayer(SalesDetailsContext db)
+        {
+            dbContext = db;
+        }
+
         //get sale table details
         public IEnumerable<Sales> GetAllSales()
         {
             try
             {
-                return db.Sales.Where(x => x.CustomerId == x.Customer.Id)
+                return dbContext.Sales.Where(x => x.CustomerId == x.Customer.Id)
                     .Where(y => y.ProductId == y.Product.Id)
                     .Where(z => z.StoreId == z.Store.Id)
                     .Include(c => c.Customer)
@@ -32,8 +38,8 @@ namespace Boilerplate.Web.App.Models
         {
             try
             {
-                db.Sales.Add(sales);
-                db.SaveChanges();
+                dbContext.Sales.Add(sales);
+                dbContext.SaveChanges();
                 return 1;
             }
             catch
@@ -47,8 +53,8 @@ namespace Boilerplate.Web.App.Models
         {
             try
             {
-                db.Entry(sales).State = EntityState.Modified;
-                return db.SaveChanges();
+                dbContext.Entry(sales).State = EntityState.Modified;
+                return dbContext.SaveChanges();
 
             }
             catch
@@ -64,9 +70,9 @@ namespace Boilerplate.Web.App.Models
         {
             try
             {
-                Sales sales = db.Sales.Find(id);
-                db.Sales.Remove(sales);
-                return db.SaveChanges();
+                Sales sales = dbContext.Sales.Find(id);
+                dbContext.Sales.Remove(sales);
+                return dbContext.SaveChanges();
             }
             catch
             {

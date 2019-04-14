@@ -9,11 +9,17 @@ namespace Boilerplate.Web.App.Controllers
 {
     public class StoreController : Controller
     {
-        private StoreDataAccessLayer storeDataAccessLayer = new StoreDataAccessLayer();
 
+        private SalesDetailsContext dbContext;
+
+        public StoreController(SalesDetailsContext db)
+        {
+            dbContext = db;
+        }
         //A page to display all data in the Store table.
         public ActionResult GetAllStoreDetails()
         {
+            StoreDataAccessLayer storeDataAccessLayer = new StoreDataAccessLayer(dbContext);
             var store = storeDataAccessLayer.GetAllStore();
             return Json(store);
         }
@@ -26,6 +32,7 @@ namespace Boilerplate.Web.App.Controllers
 
             try
             {
+                StoreDataAccessLayer storeDataAccessLayer = new StoreDataAccessLayer(dbContext);
                 int result = storeDataAccessLayer.AddStore(store);
                 statusMessage.status = (result > 0) ? "Sucess" : "Failed";
                 statusMessage.message = (result > 0) ? "Store Added Sucessfuly" : "Failed to add Store";
@@ -37,8 +44,8 @@ namespace Boilerplate.Web.App.Controllers
             }
 
             return Json(statusMessage);
-           
-          
+
+
         }
 
         //update a store details
@@ -49,6 +56,7 @@ namespace Boilerplate.Web.App.Controllers
             var statusMessage = new StatusMessage();
             try
             {
+                StoreDataAccessLayer storeDataAccessLayer = new StoreDataAccessLayer(dbContext);
                 int result = storeDataAccessLayer.UpdateStore(store);
                 statusMessage.status = (result > 0) ? "Sucess" : "Failed";
                 statusMessage.message = "Customer edited Sucessfuly";
@@ -60,8 +68,8 @@ namespace Boilerplate.Web.App.Controllers
             }
 
             return Json(statusMessage);
-          
-     
+
+
         }
 
         //delete a store details
@@ -71,6 +79,7 @@ namespace Boilerplate.Web.App.Controllers
             var statusMessage = new StatusMessage();
             try
             {
+                StoreDataAccessLayer storeDataAccessLayer = new StoreDataAccessLayer(dbContext);
                 int result = storeDataAccessLayer.DeleteStore(id);
                 statusMessage.status = (result > 0) ? "Sucess" : "Failed";
                 statusMessage.message = "Store Deleted Sucessfully";
@@ -82,8 +91,8 @@ namespace Boilerplate.Web.App.Controllers
             }
 
             return Json(statusMessage);
-            
-            
+
+
         }
     }
 }

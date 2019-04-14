@@ -8,14 +8,19 @@ namespace Boilerplate.Web.App.Models
 {
     public class CustomerDataAccessLayer
     {
-        SalesDetailsContext db = new SalesDetailsContext();
+        private SalesDetailsContext dbContext;//= new SalesDetailsContext();
+
+        public CustomerDataAccessLayer(SalesDetailsContext db)
+        {
+            dbContext = db;
+        }
 
         //get customer table details
         public IEnumerable<Customer> GetAllCustomer()
         {
             try
             {
-                return db.Customer.ToList();
+                return dbContext.Customer.ToList();
             }
             catch
             {
@@ -28,8 +33,8 @@ namespace Boilerplate.Web.App.Models
         {
             try
             {
-                db.Customer.Add(customer);
-                return db.SaveChanges();
+                dbContext.Customer.Add(customer);
+                return dbContext.SaveChanges();
               
             }
             catch
@@ -43,8 +48,8 @@ namespace Boilerplate.Web.App.Models
         {
             try
             {
-                db.Entry(customer).State = EntityState.Modified;
-                return  db.SaveChanges();
+                dbContext.Entry(customer).State = EntityState.Modified;
+                return  dbContext.SaveChanges();
                 
             }
             catch
@@ -57,9 +62,9 @@ namespace Boilerplate.Web.App.Models
         {
             try
             {
-                Customer customer = db.Customer.Find(id);
-                db.Customer.Remove(customer);
-                return db.SaveChanges();
+                Customer customer = dbContext.Customer.Find(id);
+                dbContext.Customer.Remove(customer);
+                return dbContext.SaveChanges();
 
             }
             catch

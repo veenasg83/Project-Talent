@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.SpaServices.Webpack;
+using Microsoft.EntityFrameworkCore;
 
 namespace Boilerplate.Web.App
 {
@@ -20,6 +21,8 @@ namespace Boilerplate.Web.App
         {
 
             services.AddMvc();
+            services.AddDbContext<Models.SalesDetailsContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("SalesDatabase")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

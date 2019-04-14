@@ -8,14 +8,18 @@ namespace Boilerplate.Web.App.Models
 {
     public class ProductDataAccessLayer
     {
-        SalesDetailsContext db = new SalesDetailsContext();
+        private SalesDetailsContext dbContext;
 
+        public ProductDataAccessLayer(SalesDetailsContext db)
+        {
+            dbContext = db;
+        }
         //get product details
         public IEnumerable<Product> GetAllProduct()
         {
             try
             {
-                return db.Product.ToList();
+                return dbContext.Product.ToList();
             }
             catch
             {
@@ -28,8 +32,8 @@ namespace Boilerplate.Web.App.Models
         {
             try
             {
-                db.Product.Add(product);
-               return db.SaveChanges();
+                dbContext.Product.Add(product);
+               return dbContext.SaveChanges();
                
             }
             catch
@@ -43,8 +47,8 @@ namespace Boilerplate.Web.App.Models
         {
             try
             {
-                db.Entry(product).State = EntityState.Modified;
-                db.SaveChanges();
+                dbContext.Entry(product).State = EntityState.Modified;
+                dbContext.SaveChanges();
                 return 1;
             }
             catch
@@ -57,9 +61,9 @@ namespace Boilerplate.Web.App.Models
         {
             try
             {
-                Product pdt = db.Product.Find(id);
-                db.Product.Remove(pdt);
-                return db.SaveChanges();
+                Product pdt = dbContext.Product.Find(id);
+                dbContext.Product.Remove(pdt);
+                return dbContext.SaveChanges();
             }
             catch
             {

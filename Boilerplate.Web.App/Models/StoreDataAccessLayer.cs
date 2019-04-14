@@ -8,13 +8,20 @@ namespace Boilerplate.Web.App.Models
 {
     public class StoreDataAccessLayer
     {
-         SalesDetailsContext db = new SalesDetailsContext();
+        private SalesDetailsContext dbContext;
+
+
+        public StoreDataAccessLayer(SalesDetailsContext db)
+        {
+            dbContext = db;
+        }
+
         //get Store table details
         public IEnumerable<Store> GetAllStore()
         {
             try
             {
-                return db.Store.ToList();
+                return dbContext.Store.ToList();
             }
             catch
             {
@@ -27,8 +34,8 @@ namespace Boilerplate.Web.App.Models
         {
             try
             {
-                db.Store.Add(store);
-                return db.SaveChanges();
+                dbContext.Store.Add(store);
+                return dbContext.SaveChanges();
                
             }
             catch
@@ -42,8 +49,8 @@ namespace Boilerplate.Web.App.Models
         {
             try
             {
-                db.Entry(store).State = EntityState.Modified;
-                return db.SaveChanges();
+                dbContext.Entry(store).State = EntityState.Modified;
+                return dbContext.SaveChanges();
                 
             }
             catch
@@ -56,9 +63,9 @@ namespace Boilerplate.Web.App.Models
         {
             try
             {
-                Store store = db.Store.Find(id);
-                db.Store.Remove(store);
-                return db.SaveChanges();
+                Store store = dbContext.Store.Find(id);
+                dbContext.Store.Remove(store);
+                return dbContext.SaveChanges();
             }
             catch
             {
