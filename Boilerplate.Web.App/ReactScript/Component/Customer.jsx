@@ -16,7 +16,7 @@ class Customer extends Component {
         data: [],
         paginateddata: [],
         offset: 0,
-        limit: 2
+        limit: 10
     };
 
     componentDidMount() {
@@ -130,7 +130,7 @@ class Customer extends Component {
                     offset={this.state.offset}
                     limit={this.state.limit}
                     total={this.state.data.length}
-                    primary = 'true'
+                    primary={true}
                     onClick={(e, props, offset) => this.handleClick(offset)}
                 />
             </React.Fragment>

@@ -47,8 +47,9 @@ class EditSaleModal extends Component {
         let options_customers = [];
         let options_products = [];
         let options_store = [];
+        let baseUrl = location.protocol + '//' + location.host;
         $.ajax({
-            url: "http://localhost:61419/customer/GetAllCustomerDetails",
+            url: baseUrl + "/customer/GetAllCustomerDetails",
             type: "GET",
             dataType: 'json',
             ContentType: 'application/json',
@@ -70,7 +71,7 @@ class EditSaleModal extends Component {
             }.bind(this)
         })
         $.ajax({
-            url: "http://localhost:61419/product/GetAllProductDetails",
+            url: baseUrl +"/product/GetAllProductDetails",
             type: "GET",
             dataType: 'json',
             ContentType: 'application/json',
@@ -87,7 +88,7 @@ class EditSaleModal extends Component {
             }.bind(this)
         })
         $.ajax({
-            url: "http://localhost:61419/store/GetAllStoreDetails",
+            url: baseUrl +"/store/GetAllStoreDetails",
             type: "GET",
             dataType: 'json',
             ContentType: 'application/json',
@@ -107,10 +108,11 @@ class EditSaleModal extends Component {
     }
 
     onChange = (event, type) => {
-        let s = {};
-        s[type] = event.target.value;
-        this.setState(s);
+        let s = '';
+        s = event.target.value;
+        this.setState({ date: s });
         console.log("onchange value", event.target.value);
+        console.log(s);
     }
 
 
@@ -160,7 +162,7 @@ class EditSaleModal extends Component {
             'productid': this.state.selectedProductId,
             'customerid': this.state.selectedCustomerId,
             'storeid': this.state.selectedStoreId,
-            'datesold': this.state.datesold
+            'datesold': this.state.date
         };
 
         let baseUrl = location.protocol + '//' + location.host;
@@ -178,6 +180,14 @@ class EditSaleModal extends Component {
         });
     }
 
+    formatDate = (dateString) => {
+        
+
+        let date = new Date(dateString);
+        let formattedDate = (date.getMonth()+1) + "/" + date.getDate() + '/ '  + date.getFullYear();
+        return formattedDate;
+    }
+
 
     render() {
         const { open, dimmer, date, customerName,productName,storeName, customerOptions, productOptions, storeOptions } = this.state
@@ -186,12 +196,12 @@ class EditSaleModal extends Component {
                 <Button color='yellow' onClick={this.show('blurring')}>
                     <i className="edit icon"></i>Edit</Button>
                 <Modal size={'small'} dimmer={dimmer} open={open} onClose={this.close}>
-                    <Modal.Header>Create sales</Modal.Header>
+                    <Modal.Header>Edit sales</Modal.Header>
                     <Modal.Content>
                         <Form>
                             <Form.Field>
                                 <label>Date Sold</label>
-                                <input name='date' value={date} onChange={(event) => { this.onChange(event, 'date') }} />
+                                <input name='date' value={this.formatDate(date)} onChange={(event) => { this.onChange(event, 'date') }} />
                             </Form.Field>
                             <Form.Select fluid label='Customer' name='customerName' value={customerName} options={customerOptions} onChange={this.onChangeCustomer} />
                             <Form.Select fluid label='Product' name='productName' value={productName} options={productOptions} onChange={this.onChangeProduct} />

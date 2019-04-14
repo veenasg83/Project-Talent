@@ -59,13 +59,8 @@ class Sales extends Component {
         let monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June",
     "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
         
-        console.log("format datestring",dateString);
         let date = new Date(dateString);
-        console.log("format date", date);
-        let formattedDate = date.getDay() + ' ' + monthNames[date.getMonth()] + "," + date.getFullYear();
-        console.log(date.getDay);
-        console.log(monthNames[date.getMonth()]);
-        console.log("new date",formattedDate);
+        let formattedDate = date.getDate() + ' ' + monthNames[date.getMonth()] + "," + date.getFullYear();
         return formattedDate;
     }
 

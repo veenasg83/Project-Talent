@@ -54,10 +54,11 @@ class NewSaleModal extends React.Component {
                    'storeid': this.state.selectedStoreId
                 
                };
-        console.log(data);
-       
+        
+        let baseUrl = location.protocol + '//' + location.host;
         $.ajax({
-            url: "http://localhost:61419/Sales/CreateSales",
+            
+            url: baseUrl + "/Sales/CreateSales",
             type: "POST",
             data: JSON.stringify(data),
             dataType: 'json',
@@ -75,8 +76,9 @@ class NewSaleModal extends React.Component {
         let options_customers = [];
         let options_products = [];
         let options_store = [];
+        let baseUrl = location.protocol + '//' + location.host;
         $.ajax({
-            url: "http://localhost:61419/customer/GetAllCustomerDetails",
+            url: baseUrl + "/customer/GetAllCustomerDetails",
             type: "GET",
             dataType: 'json',
             ContentType: 'application/json',
@@ -98,7 +100,7 @@ class NewSaleModal extends React.Component {
             }.bind(this)
         })
         $.ajax({
-            url: "http://localhost:61419/product/GetAllProductDetails",
+            url: baseUrl + "/product/GetAllProductDetails",
             type: "GET",
             dataType: 'json',
             ContentType: 'application/json',
@@ -115,7 +117,7 @@ class NewSaleModal extends React.Component {
             }.bind(this)
         })
         $.ajax({
-            url: "http://localhost:61419/store/GetAllStoreDetails",
+            url: baseUrl + "/store/GetAllStoreDetails",
             type: "GET",
             dataType: 'json',
             ContentType: 'application/json',
