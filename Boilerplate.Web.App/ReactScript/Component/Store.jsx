@@ -11,8 +11,14 @@ class Store extends Component {
         data: []
     };
     componentDidMount() {
+        this.loadStoreData();
+    }
+
+    loadStoreData = () => {
+        let baseUrl = location.protocol + '//' + location.host;
+
         $.ajax({
-            url: "http://localhost:61419/store/GetAllStoreDetails",
+            url: baseUrl+"/store/GetAllStoreDetails",
             type: "GET",
             dataType: 'json',
             ContentType: 'application/json',
@@ -25,6 +31,7 @@ class Store extends Component {
             }.bind(this)
         })
     }
+
     handleSort = clickedColumn => () => {
         const { column, data, direction } = this.state
 
@@ -48,7 +55,7 @@ class Store extends Component {
         return (
             <div id="parent">
                 <div className="newButton">
-               <NewStoreModal name="New Store" />
+                    <NewStoreModal name="New Store" loadStoreData={this.loadStoreData} />
                 </div>
                 <div className="dataTable">
                     <Table  sortable striped celled fixed>
@@ -74,10 +81,10 @@ class Store extends Component {
                                     <Table.Cell>{item.name}</Table.Cell>
                                     <Table.Cell>{item.address}</Table.Cell>
                                     <Table.Cell>
-                                        <EditStoreModal store={item} />
+                                        <EditStoreModal store={item} loadStoreData={this.loadStoreData} />
                                     </Table.Cell>
                                     <Table.Cell>
-                                        <DeleteStoreModal storeId={item.id}/> 
+                                        <DeleteStoreModal storeId={item.id} loadStoreData={this.loadStoreData}/> 
 
 
                                     </Table.Cell>

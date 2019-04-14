@@ -43,14 +43,16 @@ class EditStoreModal extends Component {
             'address': this.state.address
         };
 
+        let baseUrl = location.protocol + '//' + location.host;
+
         $.ajax({
-            url: 'http://localhost:61419/Store/EditStore',
+            url: baseUrl+'/Store/EditStore',
             type: 'PUT',
             data: JSON.stringify(data),
             dataType: 'json',
             contentType: 'application/json; charset=UTF-8',
             success: function(data) {
-              
+                this.props.loadStoreData();
                 this.close();
             }.bind(this)
             });

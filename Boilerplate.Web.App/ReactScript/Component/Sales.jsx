@@ -15,8 +15,14 @@ class Sales extends Component {
     };
 
     componentDidMount() {
+        this.loadSaleData();
+    }
+
+    loadSaleData = () => {
+        let baseUrl = location.protocol + '//' + location.host;
+
         $.ajax({
-            url: "http://localhost:61419/sales/GetAllSalesDetails",
+            url: baseUrl+"/sales/GetAllSalesDetails",
             type: "GET",
             dataType: 'json',
             ContentType: 'application/json',
@@ -53,9 +59,13 @@ class Sales extends Component {
         let monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June",
     "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
         
-        console.log(dateString);
+        console.log("format datestring",dateString);
         let date = new Date(dateString);
+        console.log("format date", date);
         let formattedDate = date.getDay() + ' ' + monthNames[date.getMonth()] + "," + date.getFullYear();
+        console.log(date.getDay);
+        console.log(monthNames[date.getMonth()]);
+        console.log("new date",formattedDate);
         return formattedDate;
     }
 
@@ -65,7 +75,7 @@ class Sales extends Component {
         return (
             <div id="parent">
                 <div className="newButton">
-                    <NewSaleModal name="New Sale" /></div>
+                    <NewSaleModal name="New Sale" loadSaleData={this.loadSaleData}/></div>
 
 
                 <div className="dataTable">
@@ -85,8 +95,7 @@ class Sales extends Component {
                                     onClick={this.handleSort('store')}    
                                 >Store</Table.HeaderCell>
                                 <Table.HeaderCell
-                                    sorted={column === 'datesold' ? direction : null}
-                                    onClick={this.handleSort('datesold')}    
+                                       
                                 >Date Sold</Table.HeaderCell>
                                 <Table.HeaderCell>Actions</Table.HeaderCell>
                                 <Table.HeaderCell>Actions</Table.HeaderCell>
@@ -102,12 +111,12 @@ class Sales extends Component {
                                     <Table.Cell>{item.store.name}</Table.Cell>
                                     <Table.Cell>{this.formatDate(item.dateSold)}</Table.Cell>
                                     <Table.Cell>
-                                        <EditSaleModal sale={item}/>
+                                        <EditSaleModal sale={item} loadSaleData={this.loadSaleData}/>
 
 
                                     </Table.Cell>
                                     <Table.Cell>
-                                        <DeleteSaleModal saleId={item.id}/>                                  
+                                        <DeleteSaleModal saleId={item.id} loadSaleData={this.loadSaleData}/>                                  
                                     </Table.Cell>
                                 </Table.Row>
 

@@ -187,16 +187,16 @@ class NewSaleModal extends React.Component {
             'StoreId': this.state.selectedStoreId,
             'DateSold': this.state.date
         };
-        console.log("from createsale",data);
+        let baseUrl = location.protocol + '//' + location.host;
 
         $.ajax({
-            url: "http://localhost:61419/sales/CreateSales",
+            url: baseUrl+"/sales/CreateSales",
             type: "POST",
             data: JSON.stringify(data),
             dataType: 'json',
             contentType: 'application/json; charset=UTF-8',
-            success: function (response) {
-                console.log("successajax",data);
+            success: function (response) {             
+                this.props.loadSaleData();
                 this.close();
                 // this.setState({ CustomerList: [...this.state.CustomerList, response] })
                 // this.props.onClose()

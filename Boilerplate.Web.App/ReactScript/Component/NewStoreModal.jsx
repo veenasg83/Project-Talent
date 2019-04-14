@@ -35,15 +35,16 @@ class NewStoreModal extends React.Component {
             'address': this.state.address
         };
         console.log(data);
+        let baseUrl = location.protocol + '//' + location.host;
 
         $.ajax({
-            url: "http://localhost:61419/store/CreateStore",
+            url: baseUrl+"/store/CreateStore",
             type: "POST",
             data: JSON.stringify(data),
             dataType: 'json',
             contentType: 'application/json; charset=UTF-8',
-            success: function (response) {
-                console.log(data);
+            success: function (response) {               
+                this.props.loadStoreData();
                 this.close();
                 // this.setState({ CustomerList: [...this.state.CustomerList, response] })
                 // this.props.onClose()
@@ -72,11 +73,11 @@ class NewStoreModal extends React.Component {
                         <Form>
                             <Form.Field>
                                 <label>NAME</label>
-                                <input placeholder='name' name='name' value={name} onChange={(event) => { this.onChange(event, 'name') }} />
+                                <input  name='name'  onChange={(event) => { this.onChange(event, 'name') }} />
                             </Form.Field>
                             <Form.Field>
                                 <label>ADDRESS</label>
-                                <input placeholder='address' names='address' value={address} onChange={(event) => { this.onChange(event, 'address') }} />
+                                <input  names='address'  onChange={(event) => { this.onChange(event, 'address') }} />
                             </Form.Field>
                         </Form>
                     </Modal.Content>

@@ -29,15 +29,17 @@ class DeleteStoreModal extends Component {
     deleteStore = () => {
 
         let id = this.state.id;
+        let baseUrl = location.protocol + '//' + location.host;
 
         $.ajax({
-            url: 'http://localhost:61419/Store/Delete/' + id,
+            url: baseUrl+'/Store/Delete/' + id,
 
             type: 'DELETE',
             contentType: 'text',
 
 
             success: function (data) {
+                this.props.loadStoreData();
                 this.close();
             }.bind(this)
 

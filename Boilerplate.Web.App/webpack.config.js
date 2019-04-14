@@ -13,7 +13,7 @@ module.exports = {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'wwwroot/dist'),
         chunkFilename: '[name].bundle.js',
-        publicPath: 'wwwroot/'
+        publicPath: '/wwwroot'
     },
     resolve: {
         extensions: ['.js', '.jsx']
@@ -37,7 +37,11 @@ module.exports = {
             {
                 test: /\.(ttf|eot|svg|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
                 use: [{
-                    loader: 'file-loader'
+                    loader: 'file-loader', options: {
+                        name: '[name].[ext]',
+                        outputPath: 'dist/',
+                        publicPath: url => `../dist/${url}`
+                    }
                 }]
             },
             {

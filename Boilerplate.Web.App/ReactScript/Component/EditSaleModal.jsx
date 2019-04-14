@@ -163,14 +163,16 @@ class EditSaleModal extends Component {
             'datesold': this.state.datesold
         };
 
+        let baseUrl = location.protocol + '//' + location.host;
+
         $.ajax({
-            url: 'http://localhost:61419/sales/EditSales',
+            url: baseUrl+'/sales/EditSales',
             type: 'PUT',
             data: JSON.stringify(data),
             dataType: 'json',
             contentType: 'application/json; charset=UTF-8',
             success: function (data) {
-
+                this.props.loadSaleData();
                 this.close();
             }.bind(this)
         });

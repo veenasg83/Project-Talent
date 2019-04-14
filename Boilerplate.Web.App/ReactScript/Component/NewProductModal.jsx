@@ -36,14 +36,18 @@ class NewProductModal extends React.Component {
         };
         console.log(data);
 
+
+        let baseUrl = location.protocol + '//' + location.host;
+
         $.ajax({
-            url: "http://localhost:61419/product/CreateProduct",
+            url: baseUrl+"/product/CreateProduct",
             type: "POST",
             data: JSON.stringify(data),
             dataType: 'json',
             contentType: 'application/json; charset=UTF-8',
             success: function (response) {
                 console.log(data);
+                this.props.loadProductData(); 
                 this.close();
                 // this.setState({ CustomerList: [...this.state.CustomerList, response] })
                 // this.props.onClose()

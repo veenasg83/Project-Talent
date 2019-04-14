@@ -12,8 +12,15 @@ class Product extends Component {
     };
 
     componentDidMount() {
+        this.loadProductData();
+    }
+
+    loadProductData = () => {
+
+        let baseUrl = location.protocol + '//' + location.host;
+
         $.ajax({
-            url: "http://localhost:61419/product/GetAllProductDetails",
+            url: baseUrl+"/product/GetAllProductDetails",
             type: "GET",
             dataType: 'json',
             ContentType: 'application/json',
@@ -50,7 +57,7 @@ class Product extends Component {
         return (
             <div id="parent">
                 <div className="newButton">
-                    <NewProductModal name="New Product" />
+                    <NewProductModal name="New Product" loadProductData={this.loadProductData} />
                 </div>
 
                 <div className="dataTable">
@@ -77,10 +84,10 @@ class Product extends Component {
                                     <Table.Cell>{item.name}</Table.Cell>
                                     <Table.Cell>{item.price}</Table.Cell>
                                     <Table.Cell>
-                                        <EditProductModal product={item} />
+                                        <EditProductModal product={item} loadProductData={this.loadProductData}  />
                                     </Table.Cell>
                                     <Table.Cell>
-                                        <DeleteProductModal productId = {item.id}/>
+                                        <DeleteProductModal productId={item.id} loadProductData={this.loadProductData} />
 
 
                                     </Table.Cell>

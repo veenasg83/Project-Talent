@@ -1,5 +1,5 @@
 ﻿import React from 'react'
-import { Button, Header, Image, Modal,Form } from 'semantic-ui-react'
+import { Button, Header, Image, Modal, Form, Message } from 'semantic-ui-react'
 
 
 
@@ -33,16 +33,18 @@ class NewCustomerModal extends React.Component {
                 'name': this.state.name,
                 'address': this.state.address
         };
-        console.log(data);
+
+        let baseUrl = location.protocol + '//' + location.host;
        
         $.ajax({
-            url: "http://localhost:61419/Customer/CreateCustomer",
+            url: baseUrl+"/Customer/CreateCustomer",
             type: "POST",
             data: JSON.stringify(data),
             dataType: 'json',
             contentType: 'application/json; charset=UTF-8',
             success: function (response) {
                 console.log(data);
+                this.props.loadCustomerData();
                 this.close();
                // this.setState({ CustomerList: [...this.state.CustomerList, response] })
                // this.props.onClose()

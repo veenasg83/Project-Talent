@@ -43,14 +43,16 @@ class EditProductModal extends Component {
             'price': this.state.price
         };
 
+        let baseUrl = location.protocol + '//' + location.host;
+
         $.ajax({
-            url: 'http://localhost:61419/product/EditProduct',
+            url: baseUrl+'/product/EditProduct',
             type: 'PUT',
             data: JSON.stringify(data),
             dataType: 'json',
             contentType: 'application/json; charset=UTF-8',
             success: function (data) {
-
+                this.props.loadProductData(); 
                 this.close();
             }.bind(this)
         });

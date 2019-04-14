@@ -42,14 +42,16 @@ class EditCustomerModal extends Component {
             'address': this.state.address
         };
 
+        let baseUrl = location.protocol + '//' + location.host;
+
         $.ajax({
-            url: 'http://localhost:61419/Customer/EditCustomer',
+            url: baseUrl+'/Customer/EditCustomer',
             type: 'PUT',
             data: JSON.stringify(data),
             dataType: 'json',
             contentType: 'application/json; charset=UTF-8',
-            success: function(data) {
-              
+            success: function (data) {
+                this.props.loadCustomerData();
                 this.close();
             }.bind(this)
             });
