@@ -76,11 +76,11 @@ class NewProductModal extends React.Component {
                         <Form>
                             <Form.Field>
                                 <label>NAME</label>
-                                <input placeholder='name' name='name' value={name} onChange={(event) => { this.onChange(event, 'name') }} />
+                                <input  name='name' value={name} onChange={(event) => { this.onChange(event, 'name') }} />
                             </Form.Field>
                             <Form.Field>
                                 <label>PRICE</label>
-                                <input placeholder='price' names='price' value={price} onChange={(event) => { this.onChange(event, 'price') }} />
+                                <input  names='price'  onChange={(event) => { this.onChange(event, 'price') }} />
                             </Form.Field>
                         </Form>
                     </Modal.Content>

@@ -65,7 +65,7 @@ class DeleteCustomerModal extends Component {
                     </Modal.Content>
                     <Modal.Actions>
                         <Button color='black' onClick={this.close}>
-                            Nope
+                            cancel
                         </Button>
                         <Button
                             negative

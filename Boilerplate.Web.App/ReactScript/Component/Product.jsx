@@ -51,6 +51,15 @@ class Product extends Component {
             direction: direction === 'ascending' ? 'descending' : 'ascending',
         })
     }
+
+    formatPrice(price) {
+        let formattedPrice = '';
+        formattedPrice = "$" + price;
+        return formattedPrice;
+
+    }
+
+
     render() {
 
         const { column, data, direction } = this.state
@@ -82,7 +91,7 @@ class Product extends Component {
 
                                 <Table.Row key={item.id}>
                                     <Table.Cell>{item.name}</Table.Cell>
-                                    <Table.Cell>{item.price}</Table.Cell>
+                                    <Table.Cell>{this.formatPrice(item.price)}</Table.Cell>
                                     <Table.Cell>
                                         <EditProductModal product={item} loadProductData={this.loadProductData}  />
                                     </Table.Cell>
