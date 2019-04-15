@@ -26,6 +26,7 @@ class Customer extends Component {
 
     loadCustomerData = () => {
         let baseUrl = location.protocol + '//' + location.host;
+
         $.ajax({
             url: baseUrl + "/customer/GetAllCustomerDetails",
             type: "GET",
@@ -68,7 +69,7 @@ class Customer extends Component {
         })
     }
 
-    handleClick(offset) {
+    handleClick = (offset) => {
         console.log('Inside offset '+offset);
         this.setState({ offset: offset });
         this.prepareTableData(offset);

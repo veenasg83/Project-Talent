@@ -3,12 +3,17 @@ import { Icon, Table, Button, Header, Image, Modal } from 'semantic-ui-react'
 import NewProductModal from './NewProductModal';
 import EditProductModal from './EditProductModal.jsx';
 import DeleteProductModal from './DeleteProductModal.jsx';
+import Pagination from 'semantic-ui-react-button-pagination';
+import _ from 'lodash';
 
 class Product extends Component {
     state = {
         column: null,
         direction: null,
-        data: []
+        data: [],
+        paginateddata: [],
+        offset: 0,
+        limit:10
     };
 
     componentDidMount() {
@@ -27,6 +32,7 @@ class Product extends Component {
             success: function (data) {
 
                 this.setState({ data: data });
+                this.prepareTableData(this.state.offset);
             }.bind(this),
             error: function (jqXHR) {
                 console.log(jqXHR);
@@ -35,34 +41,47 @@ class Product extends Component {
     }
 
     handleSort = clickedColumn => () => {
-        const { column, data, direction } = this.state
+        const { column, paginateddata, direction } = this.state
 
         if (column !== clickedColumn) {
             this.setState({
                 column: clickedColumn,
-                data: _.sortBy(data, [clickedColumn]),
+                paginateddata: _.sortBy(paginateddata, [clickedColumn]),
                 direction: 'ascending',
             })
 
             return
         }
         this.setState({
-            data: data.reverse(),
+            paginateddata: paginateddata.reverse(),
             direction: direction === 'ascending' ? 'descending' : 'ascending',
         })
     }
 
-    formatPrice(price) {
+    formatPrice(price){
         let formattedPrice = '';
         formattedPrice = "$" + price;
         return formattedPrice;
 
     }
 
+    prepareTableData = (offset) => {
+        let tableData = [];
+        for (var i = offset; (i < (offset + this.state.limit) && (i < this.state.data.length)); i++) {
+            tableData.push(this.state.data[i]);
+        }
+        this.setState({ paginateddata: tableData });
+    }
+
+    handleClick(offset){
+        this.setState({ offset: offset });
+        this.prepareTableData(offset);
+    }
+
 
     render() {
 
-        const { column, data, direction } = this.state
+        const { column, data, direction,paginateddata } = this.state
         return (
             <div id="parent">
                 <div className="newButton">
@@ -87,7 +106,7 @@ class Product extends Component {
                         </Table.Header>
 
                         <Table.Body>
-                            {this.state.data.map((item) =>
+                            {paginateddata.map((item) =>
 
                                 <Table.Row key={item.id}>
                                     <Table.Cell>{item.name}</Table.Cell>
@@ -107,6 +126,13 @@ class Product extends Component {
                         </Table.Body>
                     </Table>
                 </div>
+                <Pagination floated='right'
+                    offset={this.state.offset}
+                    limit={this.state.limit}
+                    total={this.state.data.length}
+                    primary={true}
+                    onClick={(e, props, offset) => this.handleClick(offset)}
+                />
             </div>
 
 
